@@ -1,13 +1,9 @@
-import os
-import sys
-import asyncio
 import time
-sys.path.append('../../../')
 from bfxapi import Client
 
-#set it in env
-API_KEY=os.getenv("BFX_KEY")
-API_SECRET=os.getenv("BFX_SECRET")
+#set API key & secret
+API_KEY=''
+API_SECRET=''
 # time now
 now = int(round(time.time() * 1000))
 
@@ -84,7 +80,7 @@ async def active_funds(symbol = 'UST'):
 
 async def log_active_funds(symbol = 'UST'):
   activeFund = await active_funds(symbol)
-  for f in activeFund:
+  for c in activeFund:
     print("id:",c.id,",rate:",c.rate,",amount:",c.amount,",day:",c.period)
 
 ####public data##############################
