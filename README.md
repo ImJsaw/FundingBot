@@ -2,6 +2,8 @@
 
 ![https://api.travis-ci.org/bitfinexcom/bitfinex-api-py.svg?branch=master](https://api.travis-ci.org/bitfinexcom/bitfinex-api-py.svg?branch=master)
 
+[![Run on Repl.it](https://repl.it/badge/github/ImJsaw/FundingBot)](https://repl.it/github/ImJsaw/FundingBot)
+
 A Python reference implementation of the Bitfinex API for both REST and websocket interaction.
 
 # Features
