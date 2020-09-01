@@ -1,12 +1,7 @@
-import os
-import sys
 import asyncio
-import time
 import random
-from rest.myLib import *
-sys.path.append('../../')
-from bfxapi import Client
-
+from myLib import *
+from keepAlive import *
 
 #sleep time (s)
 oneRoundTime = 600;
@@ -17,8 +12,8 @@ minRate = 0.00045
 two_threshold = 0.00055
 seven_threshold = 0.0007
 adjustClock = 0
-# adjust every period*10min
-adjustPeriod = 2
+# adjust every period*10min 
+adjustPeriod = 6
 #decay every hour
 #0.99^12 = 0.886
 #0.99^6 = 0.94
@@ -68,6 +63,7 @@ async def lend(symbol, remain):
     print("rate too low. Not to create offer")
     return
   await create_funding(symbol, amount, rate, period)
+  await asyncio.sleep(1)
   return
 
 
@@ -91,21 +87,27 @@ async def main():
     adjustClock = adjustClock%adjustPeriod;
     if adjustClock == 0:
       print("##adjust offers...##")
-      # just adjust every 6 turn (1 hour)
+      #just adjust every 6 turn (1 hour)
       #adjust offer
       await adjust_offer(symbol)
     #lend
-    print("##lending money...##")
-    await lend(symbol, remain)
+    while remain > minOffer(symbol):
+      await lend(symbol, remain)
+      remain = await get_avaliable_money(symbol)
     
     #update market price
     global lastRoundOffer
     lastRoundOffer = await lendBookAvg(symbol)
     #await lendBook(symbol)
     
+    #update web
+    await updateWeb()
+
     # sleep a while before do next round
     print("###########################")
+
     await asyncio.sleep(oneRoundTime)
 
+keep_alive()
 t = asyncio.ensure_future(main())
 asyncio.get_event_loop().run_forever()

@@ -94,11 +94,14 @@ class FundingCredit:
         renew = raw_credit[FundingCreditModel.RENEW]
         no_close = raw_credit[FundingCreditModel.NO_CLOSE]
         position_pair = raw_credit[FundingCreditModel.POSITION_PAIR]
-        return FundingCredit(fid, symbol, side, mts_create, mts_update, amount,
-                             flags, status, rate, period, mts_opening, mts_last_payout,
-                             notify, hidden, renew, no_close, position_pair)
+        return FundingCredit(fid, symbol, side, mts_create, mts_update, amount,flags, status, rate, period, mts_opening, mts_last_payout,notify, hidden, renew, no_close, position_pair)
 
     def __str__(self):
         string = "FundingCredit '{}' <id={} rate={} amount={} period={} status='{}'>"
-        return string.format(self.symbol, self.id, self.rate, self.amount,
-                             self.period, self.status)
+        return string.format(self.symbol, self.id, self.rate, self.amount,self.period, self.status)
+
+    def toStr(self):
+        string = "rate={} amount={} period={} status='{}'\n"
+        return string.format(self.rate, self.amount,self.period, self.status)
+
+      

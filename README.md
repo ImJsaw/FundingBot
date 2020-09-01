@@ -1,3 +1,16 @@
+# Hakka Funding Bot
+
+##  Features
+- auto funding offer
+- adjust offer price due to market
+- EVERYTHING FREE !  HAKKA !
+
+reference:
+https://repl.it/talk/learn/Hosting-discordpy-bots-with-replit/11008
+https://github.com/bitfinexcom/bitfinex-api-py
+
+---- official doc ------
+
 # Bitfinex Trading Library for Python - Bitcoin, Ethereum, Ripple and more
 
 ![https://api.travis-ci.org/bitfinexcom/bitfinex-api-py.svg?branch=master](https://api.travis-ci.org/bitfinexcom/bitfinex-api-py.svg?branch=master)

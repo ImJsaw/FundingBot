@@ -1,13 +1,9 @@
-import os
-import sys
-import asyncio
 import time
-sys.path.append('../../../')
 from bfxapi import Client
 
-#set it in env
-API_KEY=os.getenv("BFX_KEY")
-API_SECRET=os.getenv("BFX_SECRET")
+#set API key & secret
+API_KEY=''
+API_SECRET=''
 # time now
 now = int(round(time.time() * 1000))
 
@@ -19,7 +15,7 @@ bfx = Client(
 )
 
 #input symbol to get FRR, ex: USD, UST
-async def getFRR(symbol):
+async def getFRR(symbol = 'UST'):
   ticker = await bfx.rest.get_public_ticker('f'+symbol)
   #print (symbol + " FRR:")
   #print (ticker)
@@ -41,7 +37,7 @@ async def get_avaliable_money(symbol, type = 'funding'):
   for w in wallets:
     if w.type == type and w.currency == symbol:
       #raw balance include lending
-      #print(symbol,type, 'raw balance:',w.balance)
+      print(symbol,type, 'raw balance:',w.balance)
       balance = w.balance
       #lending
       lending = await active_funds(symbol)
@@ -51,7 +47,7 @@ async def get_avaliable_money(symbol, type = 'funding'):
       offers = await funding_offers(symbol)
       for f in offers:
         balance -= f.amount
-      #print(symbol,type, 'real balance:',balance)
+      print(symbol,type, 'real balance:',balance)
       return balance
     
 
@@ -74,7 +70,7 @@ async def funding_offers(symbol = 'UST'):
 async def active_funds(symbol = 'UST'):
   active_fund = []
   credits = await bfx.rest.get_funding_credits('f'+symbol)
-  print ("Funding credits:")
+  #print ("Funding credits:")
   for c in credits:
     if(c.status == 'ACTIVE'):
       active_fund.append(c)
@@ -84,18 +80,18 @@ async def active_funds(symbol = 'UST'):
 
 async def log_active_funds(symbol = 'UST'):
   activeFund = await active_funds(symbol)
-  for f in activeFund:
+  for c in activeFund:
     print("id:",c.id,",rate:",c.rate,",amount:",c.amount,",day:",c.period)
 
 ####public data##############################
 
 #掛單表
-async def log_book(symbol ,precision = 'R0'):
+async def log_book(symbol = 'UST' ,precision = 'R0'):
   books = await bfx.rest.get_public_books('f'+symbol,precision)
   # rate 
   [ print (b) for b in books ]
  
-async def lendBook(symbol):
+async def lendBook(symbol = 'UST'):
   lend = []
   books = await bfx.rest.get_public_books('f'+symbol,'R0')
   for b in books:
@@ -103,7 +99,7 @@ async def lendBook(symbol):
       lend.append(b)
   [ print (l) for l in lend ]
   
-async def lendBookAvg(symbol):
+async def lendBookAvg(symbol = 'UST'):
   total = 0
   l = 0
   books = await bfx.rest.get_public_books('f'+symbol,'R0')
@@ -115,7 +111,7 @@ async def lendBookAvg(symbol):
   return total/l
     
 #成交紀錄
-async def trade(symbol,start = 0,end = now):
+async def trade(symbol ='UST',start = 0,end = now):
   his = await bfx.rest.get_public_trades('f'+symbol,start,end)
   # id, time, amount, rate, period
   [ print (b) for b in his ]

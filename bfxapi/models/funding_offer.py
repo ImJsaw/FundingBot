@@ -88,9 +88,11 @@ class FundingOffer:
         notify = raw_offer[FundingOfferModel.NOTFIY]
         hidden = raw_offer[FundingOfferModel.HIDDEN]
         renew = raw_offer[FundingOfferModel.RENEW]
-        return FundingOffer(oid, symbol, mts_create, mts_updated, amount,
-                            amount_orig, f_type, flags, status, rate, period, notify, hidden, renew)
+        return FundingOffer(oid, symbol, mts_create, mts_updated, amount,amount_orig, f_type, flags, status, rate, period, notify, hidden, renew)
 
     def __str__(self):
         return "FundingOffer '{}' <id={} rate={} period={} status='{}'>".format(
             self.symbol, self.id, self.rate, self.period, self.status)
+
+    def toStr(self):
+        return "amount={} rate={} period={} status={}".format(self.amount, self.rate, self.period,self.status)
