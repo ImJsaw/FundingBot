@@ -4,7 +4,7 @@ from myLib import *
 from keepAlive import *
 
 #sleep time (s)
-oneRoundTime = 10;
+oneRoundTime = 600;
 
 lastRoundOffer = -1
 symbol = 'UST'
@@ -13,7 +13,7 @@ two_threshold = 0.00055
 seven_threshold = 0.0007
 adjustClock = 0
 # adjust every period*10min 
-adjustPeriod = 2
+adjustPeriod = 6
 #decay every hour
 #0.99^12 = 0.886
 #0.99^6 = 0.94
@@ -86,20 +86,25 @@ async def main():
     adjustClock = adjustClock%adjustPeriod;
     if adjustClock == 0:
       print("##adjust offers...##")
-      # just adjust every 6 turn (1 hour)
+      #just adjust every 6 turn (1 hour)
       #adjust offer
-      #await adjust_offer(symbol)
+      await adjust_offer(symbol)
     #lend
-    print("##lending money...##")
-    #await lend(symbol, remain)
+    while remain > minOffer(symbol):
+      print("##lending money...##")
+      await lend(symbol, remain)
     
     #update market price
     global lastRoundOffer
     lastRoundOffer = await lendBookAvg(symbol)
     #await lendBook(symbol)
     
+    #update web
+    await updateWeb()
+
     # sleep a while before do next round
     print("###########################")
+
     await asyncio.sleep(oneRoundTime)
 
 keep_alive()
