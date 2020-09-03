@@ -101,7 +101,7 @@ class FundingCredit:
         return string.format(self.symbol, self.id, self.rate, self.amount,self.period, self.status)
 
     def toStr(self):
-        string = "rate={} amount={} period={} status='{}'\n"
-        return string.format(self.rate, self.amount,self.period, self.status)
+        string = "rate={:.5f}% amount={:.3f} period={}\n"
+        return string.format(self.rate*100, self.amount,self.period)
 
       

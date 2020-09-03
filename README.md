@@ -1,9 +1,11 @@
-# Hakka Funding Bot
+# Simple Funding Bot
 
 ##  Features
 - auto funding offer
 - adjust offer price due to market
-- EVERYTHING FREE !  HAKKA !
+- random spread lending rate
+- not to lend if rate below threshold
+- multi-user
 
 reference:
 https://repl.it/talk/learn/Hosting-discordpy-bots-with-replit/11008

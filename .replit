@@ -1,2 +1,2 @@
 language = "python3"
-run = "pip install websockets; python3 mainBot.py"
+run = "pip install websockets; python3 -m mainBot.py"
